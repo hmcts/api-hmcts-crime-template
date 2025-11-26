@@ -11,27 +11,15 @@ plugins {
 
 group = 'uk.gov.hmcts.cp'
 version = System.getProperty('API_SPEC_VERSION') ?: '0.0.999'
-def githubActor = project.findProperty("github.actor") ?: System.getenv("GITHUB_ACTOR")
-def githubToken = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
-def githubRepo = System.getenv("GITHUB_REPOSITORY")
 
-def azureADOArtifactRepository = 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1'
-def azureADOArtifactActor = System.getenv("AZURE_DEVOPS_ARTIFACT_USERNAME")
-def azureADOArtifactToken = System.getenv("AZURE_DEVOPS_ARTIFACT_TOKEN")
-
-
-//debugging
-//    if (githubActor != null) {
-//      println "🔐 Configuring GitHub Packages publishing to: https://maven.pkg.github.com/$githubRepo"
-//    }
-//    println "GitHub Packages publishing required environment variables:"
-//    println " - GITHUB_ACTOR=${githubActor != null ? ' ✔ FOUND' : '❌'}"
-//    println " - GITHUB_TOKEN=${githubToken != null ? ' ✔ FOUND' : '❌'}"
-//    println " - GITHUB_REPOSITORY=${githubRepo != null ? ' ✔ FOUND' : '❌'}"
-
-//    println "Azure ADO publishing required environment variables:"
-//    println " - AZURE_DEVOPS_ARTIFACT_USERNAME=${azureADOArtifactActor != null ? ' ✔ FOUND' : '❌'}"
-//    println " - AZURE_DEVOPS_ARTIFACT_TOKEN=${azureADOArtifactToken != null ? ' ✔ FOUND' : '❌'}"
+apply {
+  from("$rootDir/gradle/repositories.gradle")
+  from("$rootDir/gradle/sourceSets.gradle")
+  from("$rootDir/gradle/dependency.gradle")
+  from("$rootDir/gradle/pmd.gradle")
+  from("$rootDir/gradle/test.gradle")
+  from("$rootDir/gradle/openApi.gradle")
+}
 
 java {
     def javaVersion = JavaVersion.toVersion(System.getProperty("java.version"))
@@ -133,6 +121,20 @@ publishing {
     }
 }
 
+//Creation of Software Bill of Materials
+//https://github.com/CycloneDX/cyclonedx-gradle-plugin
+cyclonedxBom {
+    projectType = "library" // or application
+    includeConfigs = ["runtimeClasspath"]
+    skipConfigs = ["test", "testImplementation"]
+    schemaVersion = "1.6"
+    componentVersion = providers.provider { project.version.toString() }
+    destination = file("${layout.buildDirectory.get().asFile.absolutePath}/reports")
+    includeBuildSystem = true
+    outputName = "bom"
+    outputFormat = "json"
+}
+
 jar {
     dependsOn tasks.named('cyclonedxBom')
     if (file("CHANGELOG.md").exists()) {
@@ -144,7 +146,7 @@ jar {
         println "⚠️  CHANGELOG.md not found, skipping inclusion in JAR"
     }
 
-    def sbomFile = file("${layout.buildDirectory.get().asFile.absolutePath}/reports/cyclonedx/bom.json")
+    def sbomFile = file("${layout.buildDirectory.get().asFile.absolutePath}/reports/bom.json")
     if (sbomFile.exists()) {
         println "✅ Including SBOM from ${sbomFile} in JAR"
         from(sbomFile) {
