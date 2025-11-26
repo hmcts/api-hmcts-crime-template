@@ -18,7 +18,7 @@ apply {
   from("$rootDir/gradle/dependency.gradle")
   from("$rootDir/gradle/pmd.gradle")
   from("$rootDir/gradle/test.gradle")
-  from("$rootDir/gradle/openApi.gradle")
+  from("$rootDir/gradle/openapi.gradle")
 }
 
 ext {
