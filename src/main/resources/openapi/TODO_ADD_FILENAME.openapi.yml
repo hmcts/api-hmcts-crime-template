@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: APIHub API Auto Mocking court-hearing-cases
-    url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-hmcts-marketplace-template/0.0.0
+    url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-hmcts-crime-template/0.0.0
 
 info:
   title: Common Platform API
