@@ -28,6 +28,7 @@ class OpenAPISpecTest {
 
     @Test
     void generated_api_should_have_expected_methods() {
+        assertThat(CasesApi.PATH_GET_RESULTS).isEqualTo("/results");
         assertThat(CasesApi.class).hasDeclaredMethods("getResults");
     }
 }
