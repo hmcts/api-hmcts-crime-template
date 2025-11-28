@@ -10,7 +10,7 @@ import uk.gov.hmcts.cp.openapi.model.Result;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-class OpenAPISpecTest {
+class OpenApiObjectsTest {
     @Test
     void generated_error_response_should_have_expected_fields() {
         assertThat(ErrorResponse.class).hasDeclaredFields("error", "message", "details", "traceId");
@@ -28,6 +28,7 @@ class OpenAPISpecTest {
 
     @Test
     void generated_api_should_have_expected_methods() {
+        assertThat(CasesApi.PATH_GET_RESULTS).isEqualTo("/results");
         assertThat(CasesApi.class).hasDeclaredMethods("getResults");
     }
 }
