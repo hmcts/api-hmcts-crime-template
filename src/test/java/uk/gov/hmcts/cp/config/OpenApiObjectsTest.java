@@ -22,6 +22,6 @@ class OpenApiObjectsTest {
 
     @Test
     void generated_api_should_have_expected_methods() {
-        assertThat(ExamplesApi.class).hasDeclaredMethods("getExamplesByExampleId");
+        assertThat(ExamplesApi.class).hasDeclaredMethods("getExampleByExampleId");
     }
 }
