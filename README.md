@@ -20,6 +20,7 @@ api-{sources-system}-[case-type]-{business-domain}-{name-of-entity}
 Some examples are:
   * `cp` - Common Platform
   * `dcs` - Crown Court Digital Case System
+  * `sscs` - Social Security and Child Support
     
 * `case-type`: optional parameter could be:
 
