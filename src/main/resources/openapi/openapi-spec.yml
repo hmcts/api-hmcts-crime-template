@@ -14,6 +14,22 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 paths:
+  /:
+    get:
+      description: Root endpoint
+      operationId: getRoot
+      tags:
+        - root
+
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Hello
+
   /example/{example_id}:
     get:
       description: Get example for example_id
@@ -28,7 +44,6 @@ paths:
           schema:
             type: integer
             format: int64
-
       responses:
         '200':
           description:  Examples found

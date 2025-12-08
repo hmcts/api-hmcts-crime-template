@@ -3,6 +3,7 @@ package uk.gov.hmcts.cp.config;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import uk.gov.hmcts.cp.openapi.api.ExamplesApi;
+import uk.gov.hmcts.cp.openapi.api.RootApi;
 import uk.gov.hmcts.cp.openapi.model.ErrorResponse;
 import uk.gov.hmcts.cp.openapi.model.ExampleResponse;
 
@@ -21,7 +22,12 @@ class OpenApiObjectsTest {
     }
 
     @Test
-    void generated_api_should_have_expected_methods() {
+    void generated_root_api_should_have_expected_methods() {
+        assertThat(RootApi.class).hasDeclaredMethods("getRoot");
+    }
+
+    @Test
+    void generated_example_api_should_have_expected_methods() {
         assertThat(ExamplesApi.class).hasDeclaredMethods("getExampleByExampleId");
     }
 }
