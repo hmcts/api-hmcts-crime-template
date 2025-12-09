@@ -14,27 +14,43 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 paths:
-  /case/{case_urn}/courtschedule:
+  /:
     get:
-      description: Retrieve details of a court schedule by case URN and court room.
-      operationId: getCourtScheduleByCaseUrn
+      description: Root endpoint
+      operationId: getRoot
       tags:
-        - court Schedule
-      parameters:
-        - in: path
-          name: case_urn
-          required: true
-          description: Unique reference number for the case
-          schema:
-            type: string
+        - root
 
       responses:
         '200':
-          description:  Case found
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Hello
+
+  /example/{example_id}:
+    get:
+      description: Get example for example_id
+      operationId: getExampleByExampleId
+      tags:
+        - examples
+      parameters:
+        - in: path
+          name: example_id
+          required: true
+          description: Unique id for the example - long
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description:  Examples found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CourtScheduleResponse"
+                $ref: "#/components/schemas/ExampleResponse"
         '400':
           description: Bad input parameter
           content:
@@ -44,79 +60,18 @@ paths:
 
 components:
   schemas:
-    CourtSchedule:
+    ExampleResponse:
+      description: Details of examples associated with the example id
       type: object
       properties:
-          hearings:
-            type: array
-            items:
-              $ref: '#/components/schemas/Hearing'
-
-    Hearing:
-      description: Details of hearings associated with the court schedule
-      type: object
-      properties:
-        hearingId:
-          description: Id of the hearing associated with the scheduling system
+        exampleId:
+          description: Id of the example - long
+          type: integer
+          format: int64
+        exampleText:
+          description: Information associated with the example id
           type: string
-          example: "HRG-123456"
-        hearingType:
-          description: Type of hearing being presented
-          type: string
-          example: "Preliminary"
-        hearingDescription:
-          description: Description associated to the hearing
-          type: string
-          example: "Initial appearance for case 456789"
-        listNote:
-          description: Will always be required but can be null
-          type: string
-          example: "Judge prefers afternoon start"
-        courtSittings:
-          type: array
-          items:
-            $ref: '#/components/schemas/CourtSitting'
-
-
-    CourtSitting:
-      description: Details of court sittings
-      type: object
-      properties:
-        sittingStart:
-          description: Sitting Start Time
-          type: string
-          format: date-time
-          example: "2025-03-25T09:00:00Z"
-        sittingEnd:
-          description: Sitting End Time
-          type: string
-          format: date-time
-          example: "2025-03-25T12:00:00Z"
-        judiciaryId:
-          description: Judge ref id
-          type: string
-          pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-          example: "123e4567-e89b-12d3-a456-426614174000"
-        courtHouse:
-          description: Court house details ref id
-          type: string
-          pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-          example: "223e4567-e89b-12d3-a456-426614174111"
-        courtRoom:
-          description: Court room details ref id
-          type: string
-          pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
-          example: "223e4567-e89b-12d3-a456-426614174111"
-
-    CourtScheduleResponse:
-      type: object
-      properties:
-        courtSchedule:
-          type: array
-          items:
-            $ref: '#/components/schemas/CourtSchedule'
-
-
+          example: "Some text"
 
     ErrorResponse:
       type: object

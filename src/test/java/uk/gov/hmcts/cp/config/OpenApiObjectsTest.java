@@ -2,12 +2,10 @@ package uk.gov.hmcts.cp.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import uk.gov.hmcts.cp.openapi.api.CourtScheduleApi;
-import uk.gov.hmcts.cp.openapi.model.CourtSchedule;
-import uk.gov.hmcts.cp.openapi.model.CourtScheduleResponse;
-import uk.gov.hmcts.cp.openapi.model.CourtSitting;
+import uk.gov.hmcts.cp.openapi.api.ExamplesApi;
+import uk.gov.hmcts.cp.openapi.api.RootApi;
 import uk.gov.hmcts.cp.openapi.model.ErrorResponse;
-import uk.gov.hmcts.cp.openapi.model.Hearing;
+import uk.gov.hmcts.cp.openapi.model.ExampleResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,26 +18,16 @@ class OpenApiObjectsTest {
 
     @Test
     void generated_court_schedule_should_have_expected_fields() {
-        assertThat(CourtSchedule.class).hasDeclaredFields("hearings");
+        assertThat(ExampleResponse.class).hasDeclaredFields("exampleId", "exampleText");
     }
 
     @Test
-    void generated_court_schedule_response_should_have_expected_fields() {
-        assertThat(CourtScheduleResponse.class).hasDeclaredFields("courtSchedule");
+    void generated_root_api_should_have_expected_methods() {
+        assertThat(RootApi.class).hasDeclaredMethods("getRoot");
     }
 
     @Test
-    void generated_court_sitting_should_have_expected_fields() {
-        assertThat(CourtSitting.class).hasDeclaredFields("sittingStart", "sittingEnd", "judiciaryId", "courtHouse", "courtRoom");
-    }
-
-    @Test
-    void generated_hearing_should_have_expected_fields() {
-        assertThat(Hearing.class).hasDeclaredFields("hearingId", "hearingType", "hearingDescription", "listNote", "courtSittings");
-    }
-
-    @Test
-    void generated_api_should_have_expected_methods() {
-        assertThat(CourtScheduleApi.class).hasDeclaredMethods("getCourtScheduleByCaseUrn");
+    void generated_example_api_should_have_expected_methods() {
+        assertThat(ExamplesApi.class).hasDeclaredMethods("getExampleByExampleId");
     }
 }
