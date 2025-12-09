@@ -23,7 +23,7 @@ apply {
 
 ext {
   springBootVersion = "4.0.0"
-  lombokVersion = "1.18.38"
+  lombokVersion = "1.18.42"
 }
 
 dependencies {
