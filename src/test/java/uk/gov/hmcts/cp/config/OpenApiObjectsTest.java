@@ -6,7 +6,8 @@ import uk.gov.hmcts.cp.openapi.api.ExamplesApi;
 import uk.gov.hmcts.cp.openapi.api.RootApi;
 import uk.gov.hmcts.cp.openapi.model.ErrorResponse;
 import uk.gov.hmcts.cp.openapi.model.ExampleResponse;
-
+import java.lang.reflect.Field;
+import java.time.Instant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
@@ -29,5 +30,13 @@ class OpenApiObjectsTest {
     @Test
     void generated_example_api_should_have_expected_methods() {
         assertThat(ExamplesApi.class).hasDeclaredMethods("getExampleByExampleId");
+    }
+    @Test
+    void generated_error_response_timestamp_should_be_instant() throws Exception {
+        Field timestampField = ErrorResponse.class.getDeclaredField("timestamp");
+
+        assertThat(timestampField.getType())
+                .as("timestamp field type")
+                .isEqualTo(Instant.class);
     }
 }
