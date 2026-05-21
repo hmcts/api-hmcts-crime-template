@@ -1,3 +1,14 @@
+# Spectral handles structural and syntactic validation of OpenAPI specs in CI.
+# It enforces OAS3 rule compliance, schema correctness, and linting conventions.
+#
+# Spectral is NOT a policy-aware reviewer. For policy checks — data sharing,
+# infrastructure SLA, HMCTS API standards, and security standards — use the
+# complementary Claude skill:
+#
+#   .claude/skills/openapi-spec-reviewer/SKILL.md
+#
+# Invoke it in a Claude Code session with: /openapi-spec-reviewer
+
 extends: ["spectral:oas"]
 rules:
   oas3-valid-media-example: off

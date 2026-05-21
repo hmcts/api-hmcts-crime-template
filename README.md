@@ -82,6 +82,41 @@ After using this template to create your repository, the following files are no 
 
 Update the `./README.md` to reflect the context of the new created repository
 
+## Claude Skill: OpenAPI Spec Reviewer
+
+This repository includes a Claude Code skill that provides policy-aware review
+of OpenAPI specifications — complementing the automated Spectral linting that
+runs in CI.
+
+### Where to find it
+
+```
+.claude/skills/openapi-spec-reviewer/
+├── SKILL.md                         # Skill definition and review instructions
+└── knowledge/
+    ├── api-standards.md             # HMCTS RESTful API Standards
+    ├── data-sharing-policy.md       # Data classification and PII rules
+    ├── infrastructure-sla.md        # Response time targets, rate limits, timeouts
+    └── security-standards.md        # Auth, transport, and input validation rules
+```
+
+### How to invoke it
+
+1. Open a Claude Code session in this repository.
+2. Paste your OpenAPI spec (YAML or JSON) into the conversation.
+3. Run `/openapi-spec-reviewer`.
+
+Claude will load all four knowledge documents and produce a structured review report
+covering: data sharing policy, infrastructure SLA, HMCTS API standards, and security
+standards. Each finding is graded **Critical**, **Warning**, or **Info**, with a
+location, description, and recommended fix. The report closes with a per-lens
+pass/fail verdict and an overall readiness score out of 100.
+
+> **Note:** The knowledge files ship with placeholder `TODO` markers. Populate them
+> with your team's real policy content before relying on the skill for compliance reviews.
+
+---
+
 ### Contribute to This Repository
 
 Contributions are welcome! Please see the [CONTRIBUTING.md](.github/CONTRIBUTING.md) file for guidelines.
