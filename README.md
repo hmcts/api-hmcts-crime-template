@@ -67,11 +67,11 @@ The [`docs`](./docs) directory includes supporting information for the repositor
 ### Setup
 
 * Go to settings of the repository -> General -> check "Automatically delete head branches"
-* Import the ruleset `.github/rulesets/main-branch-protection.json`  
-  To import the ruleset, follow GitHub’s instructions here:  
-  👉 [Importing a ruleset](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/managing-rulesets-for-a-repository#importing-a-ruleset)
-  
-Once the ruleset has been successfully imported via GitHub Settings, the new repository no longer requires `.github/rulesets/main-branch-protection.json` so it **should be deleted**:
+* Run [`setup-new-repo.sh`](./setup-new-repo.sh) from a clone of this template, passing the new
+  repository's name. It copies this template's branch-protection ruleset (read live from the
+  GitHub API, not a static file) to the new repo, grants the `api-marketplace` team access,
+  checks for leftover secrets, verifies the secrets-scanner workflow has run, and makes the
+  repository public.
 
 ### Clean Up
 
